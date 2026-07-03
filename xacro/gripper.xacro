@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="Gripper" params="name">
+
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <link name="${prefix}finger1">
+      <inertial>
+        <origin xyz="-0.0691013053303295 0.0168637833220532 -0.000510235194008973"/>
+        <mass value="0.127457990512492"/>
+        <inertia
+            ixx="2.28803355388279E-05"
+            ixy="-4.20099870625027E-06"
+            ixz="3.42841892600802E-07"
+            iyy="5.15650351948181E-05"
+            iyz="-5.67310171718486E-10"
+            izz="4.64985980845228E-05"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/gripper_pad.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/gripper_pad.glb"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}gripper_joint" type="prismatic">
+      <origin xyz="0.16555 0 0"/>
+      <parent link="${prefix}link6"/>
+      <child link="${prefix}finger1"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0" upper="0.04" effort="10" velocity="0.25"/>
+    </joint>
+
+    <link name="${prefix}finger2">
+      <inertial>
+        <origin xyz="-0.0691013053308377 -0.0168637833221477 0.000510464525338983"/>
+        <mass value="0.12745799051198"/>
+        <inertia
+            ixx="2.28803355389158E-05"
+            ixy="4.20099870615554E-06"
+            ixz="-3.42841892362301E-07"
+            iyy="5.15650351903232E-05"
+            iyz="-5.67310157868916E-10"
+            izz="4.6498598079911E-05"/>
+      </inertial>
+      <visual>
+        <origin rpy="${PI} 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/gripper_pad.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="${PI} 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/gripper_pad.glb"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}gripper_joint2" type="prismatic">
+      <origin xyz="0.16555 0 0"/>
+      <parent link="${prefix}link6"/>
+      <child link="${prefix}finger2"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="0" upper="0.04" effort="10" velocity="0.25"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+    </joint>
+
+    <link name="${prefix}gripper_center"/>
+
+    <joint name="${prefix}gripper_center_joint" type="fixed">
+      <origin xyz="0.16555 0 0"/>
+      <parent link="${prefix}link6"/>
+      <child link="${prefix}gripper_center"/>
+    </joint>
+
+  </xacro:macro>
+</robot>

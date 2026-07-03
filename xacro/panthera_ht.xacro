@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:macro name="Arm" params="name direction:=normal">
+
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+
+    <mujoco>
+      <compiler meshdir="../meshes/visual" balanceinertia="true" discardvisual="false"/>
+    </mujoco>
+
+    <!-- Base Link -->
+    <link name="${prefix}base_link">
+      <inertial>
+        <origin xyz="5.789e-05 -0.00015938 0.02298649"/>
+        <mass value="0.62922454"/>
+        <inertia
+            ixx="0.00061305"
+            ixy="-1.32e-06"
+            ixz="1.69e-06"
+            iyy="0.00063876"
+            iyz="-2.1e-07"
+            izz="0.0007565"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/base_link.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/base_link.glb"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Link 1 -->
+    <link name="${prefix}link1">
+      <inertial>
+        <origin xyz="0.00278873 -0.00094387 0.02491842"/>
+        <mass value="0.28101551"/>
+        <inertia
+            ixx="0.00039386"
+            ixy="3.75e-06"
+            ixz="-3.733e-05"
+            iyy="0.0002136"
+            iyz="7.17e-06"
+            izz="0.00037066"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link1.glb"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link1.glb"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}joint1" type="revolute">
+      <origin xyz="0 0 0.0584"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}link1"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-2.4" upper="2.4" effort="21" velocity="4.2"/>
+    </joint>
+
+    <!-- Link 2 -->
+    <link name="${prefix}link2">
+      <inertial>
+        <origin xyz="-0.12936212 -0.00213339 7.183e-05"/>
+        <mass value="1.5165092"/>
+        <inertia
+            ixx="0.00044711"
+            ixy="3.071e-05"
+            ixz="-5.119e-05"
+            iyy="0.02261049"
+            iyz="3.01e-06"
+            izz="0.02272105"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link2.STL"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link2.STL"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}joint2" type="revolute">
+      <origin xyz="0.018199 0 0.053"/>
+      <parent link="${prefix}link1"/>
+      <child link="${prefix}link2"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0.0" upper="3.2" effort="36" velocity="5"/>
+    </joint>
+
+    <!-- Link 3 -->
+    <link name="${prefix}link3">
+      <inertial>
+        <origin xyz="0.16343103 -0.00164646 0.05337427"/>
+        <mass value="0.66917784"/>
+        <inertia
+            ixx="0.00061339"
+            ixy="-1.439e-05"
+            ixz="-0.00070321"
+            iyy="0.00538615"
+            iyz="-1.404e-05"
+            izz="0.00532976"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link3.STL"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link3.STL"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}joint3" type="revolute">
+      <origin xyz="-0.26 0 0"/>
+      <parent link="${prefix}link2"/>
+      <child link="${prefix}link3"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="0.0" upper="4.0" effort="36" velocity="5"/>
+    </joint>
+
+    <!-- Link 4 -->
+    <link name="${prefix}link4">
+      <inertial>
+        <origin xyz="0.05240131 -0.00055249 0.04094177"/>
+        <mass value="0.30780516"/>
+        <inertia
+            ixx="0.00025787"
+            ixy="-1.011e-05"
+            ixz="-0.00017337"
+            iyy="0.00039454"
+            iyz="-8.09e-06"
+            izz="0.00035094"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link4.STL"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link4.STL"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}joint4" type="revolute">
+      <origin xyz="0.23 0 0.06"/>
+      <parent link="${prefix}link3"/>
+      <child link="${prefix}link4"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="-1.6" upper="1.6" effort="21" velocity="4.2"/>
+    </joint>
+
+    <!-- Link 5 -->
+    <link name="${prefix}link5">
+      <inertial>
+        <origin xyz="0.00303007 8.509e-05 -0.03624079"/>
+        <mass value="0.23711139"/>
+        <inertia
+            ixx="4.815e-05"
+            ixy="-3e-08"
+            ixz="-1.5e-07"
+            iyy="5.773e-05"
+            iyz="-1e-08"
+            izz="3.359e-05"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link5.STL"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link5.STL"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}joint5" type="revolute">
+      <origin xyz="0.07 0 0.036319"/>
+      <parent link="${prefix}link4"/>
+      <child link="${prefix}link5"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="-1.7" upper="1.7" effort="10" velocity="3.7"/>
+    </joint>
+
+    <!-- Link 6 -->
+    <link name="${prefix}link6">
+      <inertial>
+        <origin xyz="0.06704625 0.00051731 1.674e-05"/>
+        <mass value="0.45"/>
+        <inertia
+            ixx="0.00107368"
+            ixy="-1.25e-05"
+            ixz="3e-07"
+            iyy="0.00068998"
+            iyz="2.517e-05"
+            izz="0.00167551"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link6.STL"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link6.STL"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}joint6" type="revolute">
+      <origin xyz="0.02345 0 -0.039"/>
+      <parent link="${prefix}link5"/>
+      <child link="${prefix}link6"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="-2.5" upper="2.5" effort="10" velocity="3.7"/>
+    </joint>
+
+    <!-- Include Gripper -->
+    <xacro:include filename="$(find panthera_ht_description)/xacro/gripper.xacro"/>
+    <xacro:Gripper name="${name}"/>
+
+  </xacro:macro>
+</robot>
