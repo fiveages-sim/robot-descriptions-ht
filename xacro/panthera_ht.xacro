@@ -82,12 +82,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link2.STL"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link2.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link2.STL"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link2.glb"/>
         </geometry>
       </collision>
     </link>
