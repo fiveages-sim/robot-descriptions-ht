@@ -1,0 +1,37 @@
+# Common controller defaults shared by panthera_ht ros2_control variants.
+# Single-arm specifics live in ros2_controllers.yaml; dual overrides in dual.yaml.
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+ocs2_arm_controller:
+  ros__parameters:
+    update_rate: 50  # Hz
+    # MIX: position + velocity + effort + kp + kd (auto-detected by Ocs2ArmController)
+    command_interfaces:
+      - position
+      - velocity
+      - effort
+      - kp
+      - kd
+    state_interfaces:
+      - position
+      - velocity
+      - effort
+    # MIT kp/kd written to hardware command interfaces (full_control MIX)
+    default_gains: [30.0, 3.0]   # HOLD / HOME: [kp, kd]
+    pd_gains: [30.0, 3.0]        # OCS2 state: [kp, kd]
+    future_time_offset: 1.0
+    robot_name: panthera_ht
+    mpc_frequency: 50
+    home_duration: 3.0
+    home_interpolation_type: linear
+    hold_first_check_position_threshold: 0.15
+    hold_position_threshold: 0.15

@@ -115,12 +115,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link3.STL"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link3.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link3.STL"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link3.glb"/>
         </geometry>
       </collision>
     </link>
@@ -148,12 +148,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link4.STL"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link4.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link4.STL"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link4.glb"/>
         </geometry>
       </collision>
     </link>
@@ -181,12 +181,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link5.STL"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link5.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link5.STL"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link5.glb"/>
         </geometry>
       </collision>
     </link>
@@ -214,12 +214,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link6.STL"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link6.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/visual/link6.STL"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link6.glb"/>
         </geometry>
       </collision>
     </link>

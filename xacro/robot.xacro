@@ -2,7 +2,85 @@
 
 <robot name="Panthera HT" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <!-- `type` follows robot_common_launch conventions (like Tianji):
+       - empty (default): single arm (legacy)
+       - left | right | dual: mount one or two arms on a shared body
+  -->
+  <xacro:arg name="type" default="empty"/>
+
+  <xacro:arg name="body_xyz" default="0 0 0"/>
+  <xacro:arg name="body_rpy" default="0 0 0"/>
+  <xacro:arg name="left_mount_xyz" default="0 0.35 0"/>
+  <xacro:arg name="left_mount_rpy" default="0 0 0"/>
+  <xacro:arg name="right_mount_xyz" default="0 -0.35 0"/>
+  <xacro:arg name="right_mount_rpy" default="0 0 0"/>
+
   <xacro:include filename="$(find panthera_ht_description)/xacro/panthera_ht.xacro"/>
-  <xacro:Arm name=""/>
+
+  <!-- resolve arm composition from `type` (Tianji-style) -->
+  <xacro:property name="_type" value="$(arg type)"/>
+  <xacro:property name="_arm_config" value="single"/>
+  <xacro:if value="${_type == 'left'}">
+    <xacro:property name="_arm_config" value="left"/>
+  </xacro:if>
+  <xacro:if value="${_type == 'right'}">
+    <xacro:property name="_arm_config" value="right"/>
+  </xacro:if>
+  <xacro:if value="${_type == 'dual'}">
+    <xacro:property name="_arm_config" value="dual"/>
+  </xacro:if>
+
+  <!-- Single arm (legacy): root link is `base_link` -->
+  <xacro:if value="${_arm_config == 'single'}">
+    <xacro:Arm name=""/>
+  </xacro:if>
+
+  <!-- Left-only / Right-only / Dual arms: mount one or two prefixed arms on a shared body -->
+  <xacro:unless value="${_arm_config == 'single'}">
+    <link name="world"/>
+    <link name="base_link"/>
+    <link name="body_link"/>
+    <link name="left_mount"/>
+    <link name="right_mount"/>
+
+    <joint name="base_joint" type="fixed">
+      <parent link="world"/>
+      <child link="base_link"/>
+    </joint>
+
+    <joint name="body_joint" type="fixed">
+      <origin xyz="$(arg body_xyz)" rpy="$(arg body_rpy)"/>
+      <parent link="base_link"/>
+      <child link="body_link"/>
+    </joint>
+
+    <joint name="left_mount_joint" type="fixed">
+      <origin xyz="$(arg left_mount_xyz)" rpy="$(arg left_mount_rpy)"/>
+      <parent link="body_link"/>
+      <child link="left_mount"/>
+    </joint>
+
+    <joint name="right_mount_joint" type="fixed">
+      <origin xyz="$(arg right_mount_xyz)" rpy="$(arg right_mount_rpy)"/>
+      <parent link="body_link"/>
+      <child link="right_mount"/>
+    </joint>
+
+    <xacro:if value="${_arm_config == 'left' or _arm_config == 'dual'}">
+      <xacro:Arm name="left"/>
+      <joint name="left_arm_mount_joint" type="fixed">
+        <parent link="left_mount"/>
+        <child link="left_base_link"/>
+      </joint>
+    </xacro:if>
+
+    <xacro:if value="${_arm_config == 'right' or _arm_config == 'dual'}">
+      <xacro:Arm name="right"/>
+      <joint name="right_arm_mount_joint" type="fixed">
+        <parent link="right_mount"/>
+        <child link="right_base_link"/>
+      </joint>
+    </xacro:if>
+  </xacro:unless>
 
 </robot>

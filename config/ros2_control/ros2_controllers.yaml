@@ -1,4 +1,4 @@
-# This config file is used by ros2_control
+# This config file is used by ros2_control (single arm)
 controller_manager:
   ros__parameters:
     update_rate: 100  # Hz
@@ -17,9 +17,14 @@ arm_controller:
   ros__parameters:
     command_interfaces:
       - position
+      - velocity
+      - effort
+      - kp
+      - kd
     state_interfaces:
       - position
       - velocity
+      - effort
     joints:
       - joint1
       - joint2
@@ -36,7 +41,7 @@ hand_controller:
 
 ocs2_arm_controller:
   ros__parameters:
-    # Joint configuration
+    info_file_name: single
     update_rate: 50  # Hz
     joints:
       - joint1
@@ -46,13 +51,22 @@ ocs2_arm_controller:
       - joint5
       - joint6
 
+    # command_interfaces / gains come from common.yaml (this file used to override
+    # default_gains/pd_gains to [60,6], which made edits to common.yaml appear to do nothing)
     command_interfaces:
       - position
+      - velocity
+      - effort
+      - kp
+      - kd
     state_interfaces:
       - position
-    future_time_offset: 2.0
-
+      - velocity
+      - effort
+    future_time_offset: 1.0
     robot_name: panthera_ht
+    mpc_frequency: 50
 
-    # Control parameters
-    home_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    # Multi-home: FSM cmd 100 cycles home_1 <-> rest (must be 6-DoF for single arm)
+    home_1: [0.0, 0.7, 0.7, -0.1, 0.0, 0.0]
+    rest_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
