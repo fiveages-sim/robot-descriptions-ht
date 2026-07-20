@@ -18,12 +18,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/gripper_pad.glb"/>
+          <mesh filename="package://panthera_ht_description/meshes/gripper_pad.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/gripper_pad.glb"/>
+          <mesh filename="package://panthera_ht_description/meshes/gripper_pad.glb"/>
         </geometry>
       </collision>
     </link>
@@ -51,13 +51,13 @@
       <visual>
         <origin rpy="${PI} 0 0"/>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/gripper_pad.glb"/>
+          <mesh filename="package://panthera_ht_description/meshes/gripper_pad.glb"/>
         </geometry>
       </visual>
       <collision>
         <origin rpy="${PI} 0 0"/>
         <geometry>
-          <mesh filename="file://$(find panthera_ht_description)/meshes/gripper_pad.glb"/>
+          <mesh filename="package://panthera_ht_description/meshes/gripper_pad.glb"/>
         </geometry>
       </collision>
     </link>

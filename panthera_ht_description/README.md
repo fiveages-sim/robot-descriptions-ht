@@ -5,7 +5,7 @@ This package contains the description files for the HighTorque Panthera HT manip
 ## 1. Build
 
 ```bash
-cd ~/open-deploy-ws-ht
+cd ~/ht-deploy-ws
 colcon build --packages-select panthera_ht_description panthera_ros2_control --symlink-install
 ```
 
@@ -13,33 +13,41 @@ colcon build --packages-select panthera_ht_description panthera_ros2_control --s
 
 ### 2.1 Basic Arm Configuration (`type`)
 
-Robot model is defined under `xacro/robot.xacro` only (no static `urdf/`). Following `robot_common_launch` conventions (same style as Tianji), use **`type`** to switch arm composition:
+Robot model is defined under `xacro/robot.xacro`. Use **`type`** to switch arm composition:
 
 - `type:=` (default / empty): **single arm** (legacy)
 - `type:=left`: **left arm only** (prefixed `left_`)
 - `type:=right`: **right arm only** (prefixed `right_`)
 - `type:=dual`: **dual arm** (both `left_` and `right_`)
 
+**OCS2** (`ocs2_arm_controller`) reads static files under `urdf/` (e.g. `panthera_ht.urdf`, `panthera_ht_dual.urdf`). Mesh paths use `package://panthera_ht_description/meshes/...` so they work on any machine after `colcon install`.
+
+After editing xacro, regenerate URDF:
+
+```bash
+./scripts/generate_urdf.sh
+```
+
 Examples:
 
 - Single Arm (default)
 
 ```bash
-source ~/open-deploy-ws-ht/install/setup.bash
+source ~/ht-deploy-ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=panthera_ht
 ```
 
 - Dual Arm
 
 ```bash
-source ~/open-deploy-ws-ht/install/setup.bash
+source ~/ht-deploy-ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=panthera_ht type:=dual
 ```
 
 - Left / Right only
 
 ```bash
-source ~/open-deploy-ws-ht/install/setup.bash
+source ~/ht-deploy-ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=panthera_ht type:=left
 ros2 launch robot_common_launch manipulator.launch.py robot:=panthera_ht type:=right
 ```
@@ -61,7 +69,7 @@ You can tune mounting offsets via xacro mappings:
 Example (widen arm spacing):
 
 ```bash
-source ~/open-deploy-ws-ht/install/setup.bash
+source ~/ht-deploy-ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=panthera_ht type:=dual
 ```
 
@@ -73,19 +81,19 @@ Mock simulation by default (`hardware:=mock_components`).
 
 ```bash
 # Single arm (default)
-source ~/open-deploy-ws-ht/install/setup.bash
+source ~/ht-deploy-ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht
 ```
 
 
 ```bash
 # Dual arm planning
-source ~/open-deploy-ws-ht/install/setup.bash
+source ~/ht-deploy-ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht type:=dual
 ```
 
 ```bash
-source ~/open-deploy-ws-ht/install/setup.bash
+source ~/ht-deploy-ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht hardware:=isaac
 ```
 
@@ -101,13 +109,13 @@ with grippers in `removeJoints`).
 Optional: `control_mode:=pd_control` or `position_velocity` if you only need position-style HI.
 
 ```bash
-source ~/open-deploy-ws-ht/install/setup.bash
+source ~/ht-deploy-ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht hardware:=real
 ```
 
 ```bash
 # Dual arm
-source ~/open-deploy-ws-ht/install/setup.bash
+source ~/ht-deploy-ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht type:=dual hardware:=real
 ```
 
