@@ -15,7 +15,7 @@ colcon build --packages-select panthera_ht_description panthera_ros2_control --s
 
 Robot model is defined under `xacro/robot.xacro`. Use **`type`** to switch arm composition:
 
-- `type:=` (default / empty): **single arm** (legacy)
+- `type:=single` (default): **single arm**
 - `type:=left`: **left arm only** (prefixed `left_`)
 - `type:=right`: **right arm only** (prefixed `right_`)
 - `type:=dual`: **dual arm** (both `left_` and `right_`)
@@ -121,4 +121,5 @@ ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht type:=dual har
 
 Dual-arm OCS2 uses `config/ocs2/task.info` (`eeFrame` / `eeFrame1`) and merges
 `config/ros2_control/common.yaml` + `config/ros2_control/dual.yaml` when `type:=dual`.
-Single-arm mode uses `config/ocs2/single.info`.
+Single-arm mode uses `config/ocs2/single.info` and `config/ros2_control/single.yaml`
+when `type:=single` (required so launch does not compose dual EEF gripper joints).

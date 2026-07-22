@@ -2,7 +2,7 @@
 
 <robot name="Panthera HT" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:arg name="type" default="empty"/>
+  <xacro:arg name="type" default="single"/>
   <xacro:arg name="control_mode" default="full_control"/>
   <xacro:arg name="config_file"
              default="$(find panthera_ros2_control)/external/motor_cpp/robot_param/Panthera.yaml"/>
@@ -114,7 +114,7 @@
           <parameters>$(find panthera_ht_description)/config/ros2_control/dual.yaml</parameters>
         </xacro:if>
         <xacro:unless value="${_arm_config == 'dual'}">
-          <parameters>$(find panthera_ht_description)/config/ros2_control/ros2_controllers.yaml</parameters>
+          <parameters>$(find panthera_ht_description)/config/ros2_control/single.yaml</parameters>
         </xacro:unless>
       </plugin>
     </gazebo>

@@ -1,0 +1,75 @@
+# Single-arm ros2_control config (loaded when type:=single).
+#
+# robot_common_launch treats launch ``type`` as an EEF key when no {type}.yaml exists;
+# it then runs symmetric EEF compose and injects left_/right_gripper_joint into
+# joint_state_broadcaster. Single-arm URDF uses gripper_joint (no prefix), so this
+# file must exist to skip compose — same role as dual.yaml for type:=dual.
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    hand_controller:
+      type: adaptive_gripper_controller/AdaptiveGripperController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ocs2_arm_controller:
+      type: ocs2_arm_controller/Ocs2ArmController
+
+
+arm_controller:
+  ros__parameters:
+    command_interfaces:
+      - position
+      - velocity
+      - effort
+      - kp
+      - kd
+    state_interfaces:
+      - position
+      - velocity
+      - effort
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6
+
+hand_controller:
+  ros__parameters:
+    joint: gripper_joint
+    force_feedback_ratio: 1.0
+    force_threshold: 2.0
+
+ocs2_arm_controller:
+  ros__parameters:
+    info_file_name: single
+    update_rate: 50  # Hz
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6
+
+    command_interfaces:
+      - position
+      - velocity
+      - effort
+      - kp
+      - kd
+    state_interfaces:
+      - position
+      - velocity
+      - effort
+    future_time_offset: 1.0
+    robot_name: panthera_ht
+    mpc_frequency: 50
+
+    home_1: [0.0, 0.7, 0.7, -0.1, 0.0, 0.0]
+    rest_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]

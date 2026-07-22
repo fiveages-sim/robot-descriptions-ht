@@ -3,10 +3,10 @@
 <robot name="Panthera HT" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- `type` follows robot_common_launch conventions (like Tianji):
-       - empty (default): single arm (legacy)
+       - single (default): single arm
        - left | right | dual: mount one or two arms on a shared body
   -->
-  <xacro:arg name="type" default="empty"/>
+  <xacro:arg name="type" default="single"/>
 
   <xacro:arg name="body_xyz" default="0 0 0"/>
   <xacro:arg name="body_rpy" default="0 0 0"/>
