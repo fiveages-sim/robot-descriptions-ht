@@ -5,7 +5,7 @@ This package contains the description files for the HighTorque Panthera HT manip
 ## 1. Build
 
 ```bash
-cd ~/ht-deploy-ws
+cd ~/ros2_ws
 colcon build --packages-select panthera_ht_description panthera_ros2_control --symlink-install
 ```
 
@@ -33,21 +33,21 @@ Examples:
 - Single Arm (default)
 
 ```bash
-source ~/ht-deploy-ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=panthera_ht
 ```
 
 - Dual Arm
 
 ```bash
-source ~/ht-deploy-ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=panthera_ht type:=dual
 ```
 
 - Left / Right only
 
 ```bash
-source ~/ht-deploy-ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=panthera_ht type:=left
 ros2 launch robot_common_launch manipulator.launch.py robot:=panthera_ht type:=right
 ```
@@ -69,7 +69,7 @@ You can tune mounting offsets via xacro mappings:
 Example (widen arm spacing):
 
 ```bash
-source ~/ht-deploy-ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch robot_common_launch manipulator.launch.py robot:=panthera_ht type:=dual
 ```
 
@@ -81,19 +81,19 @@ Mock simulation by default (`hardware:=mock_components`).
 
 ```bash
 # Single arm (default)
-source ~/ht-deploy-ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht
 ```
 
 
 ```bash
 # Dual arm planning
-source ~/ht-deploy-ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht type:=dual
 ```
 
 ```bash
-source ~/ht-deploy-ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht hardware:=isaac
 ```
 
@@ -109,13 +109,13 @@ with grippers in `removeJoints`).
 Optional: `control_mode:=pd_control` or `position_velocity` if you only need position-style HI.
 
 ```bash
-source ~/ht-deploy-ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht hardware:=real
 ```
 
 ```bash
 # Dual arm
-source ~/ht-deploy-ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht type:=dual hardware:=real
 ```
 
