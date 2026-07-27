@@ -5,9 +5,9 @@
   <xacro:arg name="type" default="single"/>
   <xacro:arg name="control_mode" default="full_control"/>
   <xacro:arg name="config_file"
-             default="$(find panthera_ros2_control)/external/motor_cpp/robot_param/Panthera.yaml"/>
+             default="$(find ht_ros2_control)/external/motor_cpp/robot_param/Panthera.yaml"/>
   <xacro:arg name="dual_config_file"
-             default="$(find panthera_ros2_control)/external/motor_cpp/robot_param/PantheraDual.yaml"/>
+             default="$(find ht_ros2_control)/external/motor_cpp/robot_param/PantheraDual.yaml"/>
 
   <xacro:property name="_type" value="$(arg type)"/>
   <xacro:property name="_arm_config" value="single"/>
@@ -42,7 +42,7 @@
   <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'real'}">
     <ros2_control name="panthera_ht_system" type="system">
       <hardware>
-        <plugin>panthera_ros2_control/PantheraHardwareInterface</plugin>
+        <plugin>ht_ros2_control/PantheraHardwareInterface</plugin>
         <param name="config_file">${_config_file}</param>
         <param name="control_mode">$(arg control_mode)</param>
         <param name="command_debug_enabled">false</param>

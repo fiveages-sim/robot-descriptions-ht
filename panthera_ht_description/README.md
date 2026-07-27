@@ -6,7 +6,7 @@ This package contains the description files for the HighTorque Panthera HT manip
 
 ```bash
 cd ~/ros2_ws
-colcon build --packages-select panthera_ht_description panthera_ros2_control --symlink-install
+colcon build --packages-select panthera_ht_description ht_ros2_control --symlink-install
 ```
 
 ## 2. Visualize the robot
@@ -99,9 +99,9 @@ ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht hardware:=isaa
 
 ### 3.3 Real robot
 
-Requires submodule `ht-ros2-control` (`panthera_ros2_control` ROS package).
+Requires submodule `ht-ros2-control` (`ht_ros2_control` ROS package).
 Default real mode is **`full_control`** (OCS2 MIX: position + velocity + effort + kp/kd).
-Single and dual arm share one plugin `PantheraHardwareInterface` and one `hightorque_robot::robot`;
+Single and dual arm share one plugin `ht_ros2_control/PantheraHardwareInterface` and one `hightorque_robot::robot`;
 motor count is 7 (`Panthera.yaml`) or 14 (`PantheraDual.yaml`) based on `type`.
 Gravity feedforward comes from OCS2’s Pinocchio model (`config/ocs2/single.info` / `task.info`,
 with grippers in `removeJoints`).
