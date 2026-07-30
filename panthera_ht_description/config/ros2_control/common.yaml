@@ -3,7 +3,7 @@
 
 controller_manager:
   ros__parameters:
-    update_rate: 100  # Hz
+    update_rate: 500  # Hz
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -13,7 +13,7 @@ controller_manager:
 
 ocs2_arm_controller:
   ros__parameters:
-    update_rate: 50  # Hz
+    update_rate: 500  # Hz
     # MIX: position + velocity + effort + kp + kd (auto-detected by Ocs2ArmController)
     command_interfaces:
       - position
@@ -30,7 +30,7 @@ ocs2_arm_controller:
     pd_gains: [30.0, 3.0]        # OCS2 state: [kp, kd]
     future_time_offset: 1.0
     robot_name: panthera_ht
-    mpc_frequency: 50
+    mpc_frequency: 100
     home_duration: 3.0
     home_interpolation_type: linear
     hold_first_check_position_threshold: 0.15

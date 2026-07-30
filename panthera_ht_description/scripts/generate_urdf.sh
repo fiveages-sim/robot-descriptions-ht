@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Regenerate urdf/*.urdf from xacro/robot.xacro (package:// mesh paths for OCS2).
+# Regenerate urdf/*.urdf from xacro/robot.xacro
+# Mesh paths use file://$(find panthera_ht_description)/... (resolved by xacro at generate/launch time).
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -26,4 +27,4 @@ gen panthera_ht_dual.urdf type:=dual
 gen panthera_ht_left.urdf type:=left
 gen panthera_ht_right.urdf type:=right
 
-echo "Done. URDF files use package://panthera_ht_description/meshes/ paths."
+echo "Done. URDF mesh paths use file://\$(find panthera_ht_description)/meshes/."

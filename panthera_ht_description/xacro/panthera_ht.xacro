@@ -24,12 +24,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/base_link.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/base_link.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/base_link.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/base_link.glb"/>
         </geometry>
       </collision>
     </link>
@@ -49,12 +49,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link1.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link1.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link1.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link1.glb"/>
         </geometry>
       </collision>
     </link>
@@ -82,12 +82,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link2.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link2.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link2.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link2.glb"/>
         </geometry>
       </collision>
     </link>
@@ -115,12 +115,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link3.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link3.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link3.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link3.glb"/>
         </geometry>
       </collision>
     </link>
@@ -148,12 +148,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link4.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link4.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link4.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link4.glb"/>
         </geometry>
       </collision>
     </link>
@@ -181,12 +181,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link5.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link5.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link5.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link5.glb"/>
         </geometry>
       </collision>
     </link>
@@ -214,12 +214,12 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link6.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link6.glb"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://panthera_ht_description/meshes/link6.glb"/>
+          <mesh filename="file://$(find panthera_ht_description)/meshes/link6.glb"/>
         </geometry>
       </collision>
     </link>

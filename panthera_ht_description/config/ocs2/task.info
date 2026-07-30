@@ -118,7 +118,7 @@ inputCost
 
     arm
     {
-      scaling 1e-2
+      scaling 1e-3
       (0,0)  1.0
       (1,1)  1.0
       (2,2)  1.0
@@ -183,14 +183,14 @@ selfCollision
 jointPositionLimits
 {
   activate  true
-  mu      0.01
+  mu      1e-3
   delta   1e-3
 }
 
 jointVelocityLimits
 {
   mu      0.01
-  delta   1e-3
+  delta   1e-2
 
   lowerBound
   {

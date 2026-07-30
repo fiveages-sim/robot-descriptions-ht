@@ -20,7 +20,7 @@ Robot model is defined under `xacro/robot.xacro`. Use **`type`** to switch arm c
 - `type:=right`: **right arm only** (prefixed `right_`)
 - `type:=dual`: **dual arm** (both `left_` and `right_`)
 
-**OCS2** (`ocs2_arm_controller`) reads static files under `urdf/` (e.g. `panthera_ht.urdf`, `panthera_ht_dual.urdf`). Mesh paths use `package://panthera_ht_description/meshes/...` so they work on any machine after `colcon install`.
+**OCS2** (`ocs2_arm_controller`) reads static files under `urdf/` (e.g. `panthera_ht.urdf`, `panthera_ht_dual.urdf`). Mesh paths use `file://$(find panthera_ht_description)/meshes/...`（与 xacro 一致，由 xacro/`$(find)` 解析到包目录）。
 
 After editing xacro, regenerate URDF:
 

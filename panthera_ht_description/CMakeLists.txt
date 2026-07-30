@@ -4,7 +4,7 @@ project(panthera_ht_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-		DIRECTORY meshes xacro config urdf
+		DIRECTORY meshes xacro config
 		DESTINATION share/${PROJECT_NAME}/
 )
 
