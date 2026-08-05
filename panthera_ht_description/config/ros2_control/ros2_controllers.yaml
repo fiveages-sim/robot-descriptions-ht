@@ -1,4 +1,5 @@
 # This config file is used by ros2_control (single arm)
+# 默认回退文件
 controller_manager:
   ros__parameters:
     update_rate: 500  # Hz
