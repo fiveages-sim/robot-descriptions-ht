@@ -108,12 +108,5 @@
 			<param name="kd">0.1</param>
 		</joint>
 
-		<!-- Mimic finger: state only (matches DualHardwareInterface 8-DoF-per-arm layout) -->
-		<joint name="${prefix}gripper_joint2">
-			<state_interface name="position"/>
-			<state_interface name="velocity"/>
-			<state_interface name="effort"/>
-		</joint>
-
 	</xacro:macro>
 </robot>
