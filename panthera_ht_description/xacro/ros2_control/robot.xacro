@@ -4,6 +4,8 @@
 
   <xacro:arg name="type" default="single"/>
   <xacro:arg name="control_mode" default="full_control"/>
+  <!-- 拖动模式: low-stiffness (xacro_drag_mode:=true) -->
+  <xacro:arg name="drag_mode" default="false"/>
   <xacro:arg name="config_file"
              default="$(find ht_ros2_control)/external/motor_cpp/robot_param/Panthera.yaml"/>
   <xacro:arg name="dual_config_file"

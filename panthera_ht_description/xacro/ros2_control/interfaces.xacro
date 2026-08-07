@@ -104,8 +104,16 @@
 			<state_interface name="effort"/>
 			<param name="max_torque">0.5</param>
 			<param name="max_velocity">0.3</param>
-			<param name="kp">5.0</param>
-			<param name="kd">0.1</param>
+			<!-- 拖动模式 (xacro_drag_mode:=true): 低刚度, 夹爪可掰动 -->
+			<xacro:if value="${'$(arg drag_mode)' == 'true'}">
+				<param name="kp">0.001</param>
+				<param name="kd">0.01</param>
+			</xacro:if>
+			<!-- 正常模式 (默认) -->
+			<xacro:unless value="${'$(arg drag_mode)' == 'true'}">
+				<param name="kp">5.0</param>
+				<param name="kd">0.1</param>
+			</xacro:unless>
 		</joint>
 
 	</xacro:macro>

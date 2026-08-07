@@ -56,8 +56,10 @@ ocs2_arm_controller:
       - position
       - velocity
       - effort
-    default_gains: [30.0, 3.0]
-    pd_gains: [30.0, 3.0]
+      
+    default_gains: [50.0, 3.0] # 其他模式 [kp, kd]
+    # 拖动模式: quick_start 选"拖动模式"时由 robot_profile(control.patch) 覆盖为 [0.01, 0.1]
+    pd_gains: [50.0, 4.0] # OCS2 状态参数
     future_time_offset: 2.0
     robot_name: panthera_ht
     mpc_frequency: 100
@@ -67,5 +69,5 @@ ocs2_arm_controller:
     hold_position_threshold: 0.15
 
     # 12-DoF home/rest for dual arm
-    home_1: [0.0, 0.7, 0.7, -0.1, 0.0, 0.0, 0.0, 0.7, 0.7, -0.1, 0.0, 0.0]
+    home_1: [0.0, 0.8, 0.8, 0.0, 0.0, 0.0, 0.0, 0.8, 0.8, 0.0, 0.0, 0.0]
     rest_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
