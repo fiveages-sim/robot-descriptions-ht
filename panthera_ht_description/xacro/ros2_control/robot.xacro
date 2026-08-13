@@ -17,8 +17,8 @@
   <xacro:property name="_max_torques" value="21.0, 36.0, 36.0, 21.0, 10.0, 10.0, 0.5"/>
   <xacro:property name="_max_velocities" value="4.2, 5.0, 5.0, 4.2, 3.7, 3.7, 0.3"/>
   <!-- 每臂 6 值 CSV（仅臂关节） -->
-  <xacro:property name="_joint_kp" value="20.0, 30.0, 40.0, 20.0, 20.0, 20.0"/>
-  <xacro:property name="_joint_kd" value="0.2, 0.3, 0.4, 0.2, 0.2, 0.2"/>
+  <xacro:property name="_joint_kp" value="40.0, 40.0, 40.0, 40.0, 40.0, 40.0"/>
+  <xacro:property name="_joint_kd" value="4.0, 4.0, 4.0, 4.0, 4.0, 4.0"/>
 
   <xacro:property name="_type" value="$(arg type)"/>
   <xacro:property name="_arm_config" value="single"/>
@@ -60,9 +60,9 @@
         <param name="gripper_rad_to_m">0.025</param>
         <param name="shutdown_return_home">true</param>
         <param name="shutdown_home">0.0, 0.0, 0.0, 0.0, 0.0, 0.0</param>
-        <param name="shutdown_home_timeout">3.5</param>
-        <param name="shutdown_home_tolerance">0.05</param>
-        <param name="shutdown_home_velocity">0.3</param>
+        <param name="shutdown_home_timeout">3.0</param>
+        <param name="shutdown_home_tolerance">0.02</param>
+        <param name="shutdown_home_velocity">0.5</param>
         <param name="max_torques">${_max_torques + ', ' + _max_torques if _arm_config == 'dual' else _max_torques}</param>
         <param name="max_velocities">${_max_velocities + ', ' + _max_velocities if _arm_config == 'dual' else _max_velocities}</param>
         <param name="joint_kp">${_joint_kp + ', ' + _joint_kp if _arm_config == 'dual' else _joint_kp}</param>
