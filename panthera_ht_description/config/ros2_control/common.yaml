@@ -14,20 +14,15 @@ controller_manager:
 ocs2_arm_controller:
   ros__parameters:
     update_rate: 500  # Hz
-    # MIX: position + velocity + effort + kp + kd (auto-detected by Ocs2ArmController)
+    # POSITION: kp/kd 不再作为命令接口导出（增益由硬件参数管理）
     command_interfaces:
       - position
       - velocity
       - effort
-      - kp
-      - kd
     state_interfaces:
       - position
       - velocity
       - effort
-    # MIT kp/kd written to hardware command interfaces (full_control MIX)
-    default_gains: [30.0, 3.0]   # HOLD / HOME: [kp, kd]
-    pd_gains: [30.0, 3.0]        # OCS2 state: [kp, kd]
     future_time_offset: 1.0
     robot_name: panthera_ht
     mpc_frequency: 100
