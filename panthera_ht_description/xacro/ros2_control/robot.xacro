@@ -14,11 +14,18 @@
              default="$(find ht_ros2_control)/external/motor_cpp/robot_param/PantheraDual.yaml"/>
 
   <!-- 每臂 7 值 CSV（6 臂关节 + 夹爪）；dual 时拼接为 14 值 -->
-  <xacro:property name="_max_torques" value="21.0, 36.0, 36.0, 21.0, 10.0, 10.0, 0.5"/>
-  <xacro:property name="_max_velocities" value="4.2, 5.0, 5.0, 4.2, 3.7, 3.7, 0.3"/>
-  <!-- 每臂 6 值 CSV（仅臂关节） -->
-  <xacro:property name="_joint_kp" value="40.0, 40.0, 40.0, 40.0, 40.0, 40.0"/>
-  <xacro:property name="_joint_kd" value="4.0, 4.0, 4.0, 4.0, 4.0, 4.0"/>
+  <xacro:arg name="max_torques" default="21.0, 36.0, 36.0, 21.0, 10.0, 10.0, 0.5"/>
+  <xacro:arg name="max_velocities" default="4.2, 5.0, 5.0, 4.2, 3.7, 3.7, 0.3"/>
+  <!-- 每臂 6 值 CSV（仅臂关节）；启动时可通过 launch 参数覆盖（xacro mappings） -->
+  <xacro:arg name="joint_kp" default="40.0, 40.0, 40.0, 40.0, 40.0, 40.0"/>
+  <xacro:arg name="joint_kd" default="4.0, 4.0, 4.0, 4.0, 4.0, 4.0"/>
+  <xacro:arg name="gripper_kp" default="5.0"/>
+  <xacro:arg name="gripper_kd" default="0.1"/>
+
+  <xacro:property name="_max_torques" value="$(arg max_torques)"/>
+  <xacro:property name="_max_velocities" value="$(arg max_velocities)"/>
+  <xacro:property name="_joint_kp" value="$(arg joint_kp)"/>
+  <xacro:property name="_joint_kd" value="$(arg joint_kd)"/>
 
   <xacro:property name="_type" value="$(arg type)"/>
   <xacro:property name="_arm_config" value="single"/>
@@ -67,8 +74,8 @@
         <param name="max_velocities">${_max_velocities + ', ' + _max_velocities if _arm_config == 'dual' else _max_velocities}</param>
         <param name="joint_kp">${_joint_kp + ', ' + _joint_kp if _arm_config == 'dual' else _joint_kp}</param>
         <param name="joint_kd">${_joint_kd + ', ' + _joint_kd if _arm_config == 'dual' else _joint_kd}</param>
-        <param name="gripper_kp">5.0</param>
-        <param name="gripper_kd">0.1</param>
+        <param name="gripper_kp">$(arg gripper_kp)</param>
+        <param name="gripper_kd">$(arg gripper_kd)</param>
       </hardware>
       <!-- command 、 state 接口 -->
       <xacro:if value="${_arm_config == 'dual'}">
