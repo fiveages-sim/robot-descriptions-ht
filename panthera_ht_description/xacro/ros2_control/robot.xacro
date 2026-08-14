@@ -21,6 +21,10 @@
   <xacro:arg name="joint_kd" default="4.0, 4.0, 4.0, 4.0, 4.0, 4.0"/>
   <xacro:arg name="gripper_kp" default="5.0"/>
   <xacro:arg name="gripper_kd" default="0.1"/>
+  <!-- 控制盒 USB 选择（真机）：auto=自动检测（仅允许 1 个控制盒，多于 1 个报错退出）；
+       或指定 USB 路径（如 1-1.2 / usb-0:1.2，子串匹配，从 udevadm info 复制的路径即可）。
+       多套机械臂同机时，各启动指定自己的控制盒路径。 -->
+  <xacro:arg name="usb_select" default="auto"/>
 
   <xacro:property name="_max_torques" value="$(arg max_torques)"/>
   <xacro:property name="_max_velocities" value="$(arg max_velocities)"/>
@@ -63,6 +67,7 @@
       <hardware>
         <plugin>ht_ros2_control/PantheraHardwareInterface</plugin>
         <param name="config_file">${_config_file}</param>
+        <param name="usb_select">$(arg usb_select)</param>
         <param name="control_mode">$(arg control_mode)</param>
         <param name="gripper_rad_to_m">0.025</param>
         <param name="shutdown_return_home">true</param>
