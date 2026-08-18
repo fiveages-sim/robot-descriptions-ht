@@ -6,13 +6,9 @@
   <xacro:arg name="type" default="single"/>
   <!-- 控制模式: full_control、pd_control、position_velocity -->
   <xacro:arg name="control_mode" default="full_control"/>
-  <!-- 高擎 SDK 电机配置文件 -->
-  <xacro:arg name="config_file"
-             default="$(find ht_ros2_control)/external/motor_cpp/robot_param/Panthera.yaml"/>
-  <!-- 双高擎 SDK 电机双臂配置文件 -->
-  <xacro:arg name="dual_config_file"
-             default="$(find ht_ros2_control)/external/motor_cpp/robot_param/PantheraDual.yaml"/>
-
+  <!-- 高擎 SDK 电机配置文件；默认空 = 按 type 自动选择（见 _config_file 选择逻辑）
+       可通过 launch 参数 xacro_config_file:=<path> 显式覆盖 -->
+  <xacro:arg name="config_file" default=""/>
   <!-- 每臂 7 值 CSV（6 臂关节 + 夹爪）；dual 时拼接为 14 值 -->
   <xacro:arg name="max_torques" default="21.0, 36.0, 36.0, 21.0, 10.0, 10.0, 0.5"/>
   <xacro:arg name="max_velocities" default="4.2, 5.0, 5.0, 4.2, 3.7, 3.7, 0.3"/>
@@ -26,11 +22,7 @@
        多套机械臂同机时，各启动指定自己的控制盒路径。 -->
   <xacro:arg name="usb_select" default="auto"/>
 
-  <xacro:property name="_max_torques" value="$(arg max_torques)"/>
-  <xacro:property name="_max_velocities" value="$(arg max_velocities)"/>
-  <xacro:property name="_joint_kp" value="$(arg joint_kp)"/>
-  <xacro:property name="_joint_kd" value="$(arg joint_kd)"/>
-
+  <!-- resolve arm composition from `type` (Tianji-style) -->
   <xacro:property name="_type" value="$(arg type)"/>
   <xacro:property name="_arm_config" value="single"/>
   <xacro:if value="${_type == 'left'}">
@@ -43,32 +35,60 @@
     <xacro:property name="_arm_config" value="dual"/>
   </xacro:if>
 
-  <!-- Select motor YAML: dual uses 14 motors; otherwise 7 -->
-  <xacro:property name="_config_file" value="$(arg config_file)"/>
+
+  <xacro:property name="_max_torques" value="$(arg max_torques)"/>
+  <xacro:property name="_max_velocities" value="$(arg max_velocities)"/>
+  <xacro:property name="_joint_kp" value="$(arg joint_kp)"/>
+  <xacro:property name="_joint_kd" value="$(arg joint_kd)"/>
+
+  <xacro:property name="_control_mode" value="$(arg control_mode)"/>
+  <xacro:property name="_config_file_override" value="$(arg config_file)"/>
+  <xacro:property name="_usb_select" value="$(arg usb_select)"/>
+  <xacro:property name="_gripper_kp" value="$(arg gripper_kp)"/>
+  <xacro:property name="_gripper_kd" value="$(arg gripper_kd)"/>
+  <xacro:property name="_ros2_control_hardware_type" value="$(arg ros2_control_hardware_type)"/>
+
+  <!-- Select motor YAML by type: single → Panthera.yaml, left → PantheraLeft.yaml,
+       right → PantheraRight.yaml (serial_id=2), dual → PantheraDual.yaml (14 motors).
+       显式设置 config_file（如 xacro_config_file:=）时优先使用。 -->
+  <!-- 默认配置文件 -->
+  <xacro:property name="_config_file"
+             value="$(find ht_ros2_control)/external/motor_cpp/robot_param/Panthera.yaml"/>
+  <!-- 左臂配置文件 -->
+  <xacro:if value="${_arm_config == 'left'}">
+    <xacro:property name="_config_file"
+               value="$(find ht_ros2_control)/external/motor_cpp/robot_param/PantheraLeft.yaml"/>
+  </xacro:if>
+  <!-- 右臂配置文件 -->
+  <xacro:if value="${_arm_config == 'right'}">
+    <xacro:property name="_config_file"
+               value="$(find ht_ros2_control)/external/motor_cpp/robot_param/PantheraRight.yaml"/>
+  </xacro:if>
+  <!-- 双臂配置文件 -->
   <xacro:if value="${_arm_config == 'dual'}">
-    <xacro:property name="_config_file" value="$(arg dual_config_file)"/>
+    <xacro:property name="_config_file"
+               value="$(find ht_ros2_control)/external/motor_cpp/robot_param/PantheraDual.yaml"/>
+  </xacro:if>
+  <!-- 显式覆盖配置文件 -->
+  <xacro:if value="${_config_file_override != ''}">
+    <xacro:property name="_config_file" value="${_config_file_override}"/>
   </xacro:if>
 
-  <xacro:if value="${_arm_config == 'single'}">
-    <link name="world"/>
-    <joint name="world_fixed" type="fixed">
-      <parent link="world"/>
-      <child link="base_link"/>
-    </joint>
-  </xacro:if>
+
+
 
   <xacro:include filename="$(find panthera_ht_description)/xacro/robot.xacro"/>
   <xacro:include filename="$(find panthera_ht_description)/xacro/ros2_control/interfaces.xacro"/>
 
   <!-- Real hardware: one PantheraHardwareInterface; motor count from config_file -->
   <!-- 真实的硬件：PantheraHardwareInterface -->
-  <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'real'}">
+  <xacro:if value="${_ros2_control_hardware_type == 'real'}">
     <ros2_control name="panthera_ht_system" type="system">
       <hardware>
         <plugin>ht_ros2_control/PantheraHardwareInterface</plugin>
         <param name="config_file">${_config_file}</param>
-        <param name="usb_select">$(arg usb_select)</param>
-        <param name="control_mode">$(arg control_mode)</param>
+        <param name="usb_select">${_usb_select}</param>
+        <param name="control_mode">${_control_mode}</param>
         <param name="gripper_rad_to_m">0.025</param>
         <param name="shutdown_return_home">true</param>
         <param name="shutdown_home">0.0, 0.0, 0.0, 0.0, 0.0, 0.0</param>
@@ -79,40 +99,34 @@
         <param name="max_velocities">${_max_velocities + ', ' + _max_velocities if _arm_config == 'dual' else _max_velocities}</param>
         <param name="joint_kp">${_joint_kp + ', ' + _joint_kp if _arm_config == 'dual' else _joint_kp}</param>
         <param name="joint_kd">${_joint_kd + ', ' + _joint_kd if _arm_config == 'dual' else _joint_kd}</param>
-        <param name="gripper_kp">$(arg gripper_kp)</param>
-        <param name="gripper_kd">$(arg gripper_kd)</param>
+        <param name="gripper_kp">${_gripper_kp}</param>
+        <param name="gripper_kd">${_gripper_kd}</param>
       </hardware>
       <!-- command 、 state 接口 -->
       <xacro:if value="${_arm_config == 'dual'}">
         <xacro:panthera_ht_interfaces name="left"/>
         <xacro:panthera_ht_interfaces name="right"/>
       </xacro:if>
-      <xacro:if value="${_arm_config == 'left'}">
-        <xacro:panthera_ht_interfaces name="left"/>
-      </xacro:if>
-      <xacro:if value="${_arm_config == 'right'}">
-        <xacro:panthera_ht_interfaces name="right"/>
-      </xacro:if>
-      <xacro:if value="${_arm_config == 'single'}">
+      <xacro:if value="${_arm_config == 'single' or _arm_config == 'left' or _arm_config == 'right'}">
         <xacro:panthera_ht_interfaces name=""/>
       </xacro:if>
     </ros2_control>
   </xacro:if>
 
   <!-- 非真实硬件：GazeboSimSystem、mock_components、TopicBasedSystem -->
-  <xacro:unless value="${'$(arg ros2_control_hardware_type)' == 'real'}">
+  <xacro:unless value="${_ros2_control_hardware_type == 'real'}">
     <ros2_control name="panthera_ht_system" type="system">
       <hardware>
         <!-- Gazebo -->
-        <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'gz'}">
+        <xacro:if value="${_ros2_control_hardware_type == 'gz'}">
           <plugin>gz_ros2_control/GazeboSimSystem</plugin>
         </xacro:if>
         <!-- mock -->
-        <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'mock_components'}">
+        <xacro:if value="${_ros2_control_hardware_type == 'mock_components'}">
           <plugin>mock_components/GenericSystem</plugin>
         </xacro:if>
         <!-- Isaac -->
-        <xacro:if value="${'$(arg ros2_control_hardware_type)' == 'isaac'}">
+        <xacro:if value="${_ros2_control_hardware_type == 'isaac'}">
           <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
           <param name="joint_commands_topic">/isaac/joint_command</param>
           <param name="joint_states_topic">/isaac/joint_states</param>
@@ -123,20 +137,15 @@
         <xacro:panthera_ht_interfaces name="left"/>
         <xacro:panthera_ht_interfaces name="right"/>
       </xacro:if>
-      <xacro:if value="${_arm_config == 'left'}">
-        <xacro:panthera_ht_interfaces name="left"/>
-      </xacro:if>
-      <xacro:if value="${_arm_config == 'right'}">
-        <xacro:panthera_ht_interfaces name="right"/>
-      </xacro:if>
-      <xacro:if value="${_arm_config == 'single'}">
+      <xacro:if value="${_arm_config == 'single' or _arm_config == 'left' or _arm_config == 'right'}">
         <xacro:panthera_ht_interfaces name=""/>
       </xacro:if>
     </ros2_control>
   </xacro:unless>
 
   <xacro:arg name="gazebo" default="false"/>
-  <xacro:if value="$(arg gazebo)">
+  <xacro:property name="_gazebo" value="$(arg gazebo)"/>
+  <xacro:if value="${_gazebo == 'true'}">
     <gazebo>
       <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
         <xacro:if value="${_arm_config == 'dual'}">
