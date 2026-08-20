@@ -1,5 +1,4 @@
-# Common controller defaults shared by panthera_ht ros2_control variants.
-# Single-arm specifics live in ros2_controllers.yaml; dual overrides in dual.yaml.
+# 写在这里的是默认值，'dual.yaml' 'single.yaml' 中的同名参数会覆盖这里的内容
 
 controller_manager:
   ros__parameters:
@@ -23,10 +22,21 @@ ocs2_arm_controller:
       - position
       - velocity
       - effort
-    future_time_offset: 1.0
+    future_time_offset: 2.0
     robot_name: panthera_ht
     mpc_frequency: 100
+
+    # home
     home_duration: 3.0
     home_interpolation_type: linear
+
+    # hold
     hold_first_check_position_threshold: 0.15
     hold_position_threshold: 0.15
+
+    # moveJ
+    movej_interpolation_type: linear # 插值类型 tanh / linear / doubles / none
+    movej_duration: 0.01   # 插值总时长（秒）（默认 3.0）
+    # movej_tanh_scale: 3.0 # tanh 函数缩放因子（默认 3.0）
+    # movej_trajectory_duration: 3.0 # 多段轨迹（moveL 等）总时长
+    # movej_trajectory_blend_ratio: 0.0 # 多段轨迹混合比例（默认 0.0）

@@ -64,13 +64,6 @@ ocs2_arm_controller:
       - velocity
       - effort
 
-    future_time_offset: 2.0
-    robot_name: panthera_ht
-    mpc_frequency: 100
-    home_duration: 3.0
-    home_interpolation_type: linear
-    hold_first_check_position_threshold: 0.15
-    hold_position_threshold: 0.15
-
+    # 6-DoF home/rest for single arm
     home_1: [0.0, 0.8, 0.8, 0.0, 0.0, 0.0]
     rest_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
