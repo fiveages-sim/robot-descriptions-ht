@@ -36,7 +36,7 @@ ocs2_arm_controller:
 
     # moveJ
     movej_interpolation_type: linear # 插值类型 tanh / linear / doubles / none
-    movej_duration: 0.01   # 插值总时长（秒）（默认 3.0）
+    movej_duration: 0.005   # 插值总时长（秒）（默认 3.0）
     # movej_tanh_scale: 3.0 # tanh 函数缩放因子（默认 3.0）
     # movej_trajectory_duration: 3.0 # 多段轨迹（moveL 等）总时长
     # movej_trajectory_blend_ratio: 0.0 # 多段轨迹混合比例（默认 0.0）
