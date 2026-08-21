@@ -9,90 +9,54 @@
 			<command_interface name="position"/>
 			<command_interface name="velocity"/>
 			<command_interface name="effort"/>
-			<command_interface name="kp"/>
-			<command_interface name="kd"/>
 			<state_interface name="position"/>
 			<state_interface name="velocity"/>
 			<state_interface name="effort"/>
-			<param name="max_torque">21.0</param>
-			<param name="max_velocity">4.2</param>
-			<param name="kp">20.0</param>
-			<param name="kd">0.2</param>
 		</joint>
 
 		<joint name="${prefix}joint2">
 			<command_interface name="position"/>
 			<command_interface name="velocity"/>
 			<command_interface name="effort"/>
-			<command_interface name="kp"/>
-			<command_interface name="kd"/>
 			<state_interface name="position"/>
 			<state_interface name="velocity"/>
 			<state_interface name="effort"/>
-			<param name="max_torque">36.0</param>
-			<param name="max_velocity">5.0</param>
-			<param name="kp">30.0</param>
-			<param name="kd">0.3</param>
 		</joint>
 
 		<joint name="${prefix}joint3">
 			<command_interface name="position"/>
 			<command_interface name="velocity"/>
 			<command_interface name="effort"/>
-			<command_interface name="kp"/>
-			<command_interface name="kd"/>
 			<state_interface name="position"/>
 			<state_interface name="velocity"/>
 			<state_interface name="effort"/>
-			<param name="max_torque">36.0</param>
-			<param name="max_velocity">5.0</param>
-			<param name="kp">40.0</param>
-			<param name="kd">0.4</param>
 		</joint>
 
 		<joint name="${prefix}joint4">
 			<command_interface name="position"/>
 			<command_interface name="velocity"/>
 			<command_interface name="effort"/>
-			<command_interface name="kp"/>
-			<command_interface name="kd"/>
 			<state_interface name="position"/>
 			<state_interface name="velocity"/>
 			<state_interface name="effort"/>
-			<param name="max_torque">21.0</param>
-			<param name="max_velocity">4.2</param>
-			<param name="kp">20.0</param>
-			<param name="kd">0.2</param>
 		</joint>
 
 		<joint name="${prefix}joint5">
 			<command_interface name="position"/>
 			<command_interface name="velocity"/>
 			<command_interface name="effort"/>
-			<command_interface name="kp"/>
-			<command_interface name="kd"/>
 			<state_interface name="position"/>
 			<state_interface name="velocity"/>
 			<state_interface name="effort"/>
-			<param name="max_torque">10.0</param>
-			<param name="max_velocity">3.7</param>
-			<param name="kp">20.0</param>
-			<param name="kd">0.2</param>
 		</joint>
 
 		<joint name="${prefix}joint6">
 			<command_interface name="position"/>
 			<command_interface name="velocity"/>
 			<command_interface name="effort"/>
-			<command_interface name="kp"/>
-			<command_interface name="kd"/>
 			<state_interface name="position"/>
 			<state_interface name="velocity"/>
 			<state_interface name="effort"/>
-			<param name="max_torque">10.0</param>
-			<param name="max_velocity">3.7</param>
-			<param name="kp">20.0</param>
-			<param name="kd">0.2</param>
 		</joint>
 
 		<joint name="${prefix}gripper_joint">
@@ -102,18 +66,6 @@
 			</state_interface>
 			<state_interface name="velocity"/>
 			<state_interface name="effort"/>
-			<param name="max_torque">0.5</param>
-			<param name="max_velocity">0.3</param>
-			<!-- 拖动模式 (xacro_drag_mode:=true): 低刚度, 夹爪可掰动 -->
-			<xacro:if value="${'$(arg drag_mode)' == 'true'}">
-				<param name="kp">0.001</param>
-				<param name="kd">0.01</param>
-			</xacro:if>
-			<!-- 正常模式 (默认) -->
-			<xacro:unless value="${'$(arg drag_mode)' == 'true'}">
-				<param name="kp">5.0</param>
-				<param name="kd">0.1</param>
-			</xacro:unless>
 		</joint>
 
 	</xacro:macro>
