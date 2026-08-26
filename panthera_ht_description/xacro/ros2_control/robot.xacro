@@ -4,8 +4,8 @@
 
   <!-- 机器人类型: single、dual、left、right -->
   <xacro:arg name="type" default="single"/>
-  <!-- 控制模式: full_control、pd_control、position_velocity -->
-  <xacro:arg name="control_mode" default="full_control"/>
+  <!-- 控制模式: mit（位置+速度+力矩+kp/kd，kp/kd 可为 0）、effort（纯力矩）、position（纯位置） -->
+  <xacro:arg name="control_mode" default="mit"/>
   <!-- 高擎 SDK 电机配置文件；默认空 = 按 type 自动选择（见 _config_file 选择逻辑）
        可通过 launch 参数 xacro_config_file:=<path> 显式覆盖 -->
   <xacro:arg name="config_file" default=""/>

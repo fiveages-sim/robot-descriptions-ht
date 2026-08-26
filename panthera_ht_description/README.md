@@ -100,13 +100,14 @@ ros2 launch ocs2_arm_controller demo.launch.py robot:=panthera_ht hardware:=isaa
 ### 3.3 Real robot
 
 Requires submodule `ht-ros2-control` (`panthera_ros2_control` ROS package).
-Default real mode is **`full_control`** (OCS2 MIX: position + velocity + effort + kp/kd).
-Single and dual arm share one plugin `PantheraHardwareInterface` and one `hightorque_robot::robot`;
+Default real mode is **`mit`** (OCS2 MIX: position + velocity + effort + kp/kd;
+kp/kd may be 0 for pure feedforward). Single and dual arm share one plugin
+`PantheraHardwareInterface` and one `hightorque_robot::robot`;
 motor count is 7 (`Panthera.yaml`) or 14 (`PantheraDual.yaml`) based on `type`.
 Gravity feedforward comes from OCS2’s Pinocchio model (`config/ocs2/single.info` / `dual.info`,
 with grippers in `removeJoints`).
 
-Optional: `control_mode:=pd_control` or `position_velocity` if you only need position-style HI.
+Optional: `control_mode:=effort` (pure torque) or `position` (pure position).
 
 ```bash
 source ~/ht-deploy-ws/install/setup.bash
