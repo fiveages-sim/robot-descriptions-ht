@@ -3,3 +3,10 @@
 
     # 是否启用VR输入处理
     enable_vr: true
+
+    # RViz Fixed Frame on Panthera. Split control_base_frame comes from acone
+    marker_fixed_frame: base_link
+
+    # FULL_BODY VR rebase/calculation frame. Panthera URDF has base_link only
+    # (no base_footprint); override arms_target_manager default.
+    vr_follow_frame: base_link
