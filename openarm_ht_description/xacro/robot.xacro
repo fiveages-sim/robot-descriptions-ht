@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<robot name="OpenArm HT" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- `type` follows robot_common_launch conventions:
+       - dual (default): left_ + right_ arms on shared base/torso
+       - left | right | single: one unprefixed arm (side kinematics) on shared base/torso
+  -->
+  <xacro:arg name="type" default="dual"/>
+
+  <xacro:arg name="torso_xyz" default="0 0 0.7"/>
+  <xacro:arg name="torso_rpy" default="0 0 0"/>
+  <xacro:arg name="left_mount_xyz" default="0 0.096 0"/>
+  <xacro:arg name="left_mount_rpy" default="0 0 0"/>
+  <xacro:arg name="right_mount_xyz" default="0 -0.096 0"/>
+  <xacro:arg name="right_mount_rpy" default="0 0 0"/>
+
+  <xacro:include filename="$(find openarm_ht_description)/xacro/base.xacro"/>
+  <xacro:include filename="$(find openarm_ht_description)/xacro/openarm_ht.xacro"/>
+
+  <xacro:property name="_type" value="$(arg type)"/>
+  <xacro:property name="_arm_config" value="dual"/>
+  <xacro:if value="${_type == 'single'}">
+    <xacro:property name="_arm_config" value="single"/>
+  </xacro:if>
+  <xacro:if value="${_type == 'left'}">
+    <xacro:property name="_arm_config" value="left"/>
+  </xacro:if>
+  <xacro:if value="${_type == 'right'}">
+    <xacro:property name="_arm_config" value="right"/>
+  </xacro:if>
+  <xacro:if value="${_type == 'dual'}">
+    <xacro:property name="_arm_config" value="dual"/>
+  </xacro:if>
+
+  <xacro:property name="_torso_xyz" value="$(arg torso_xyz)"/>
+  <xacro:property name="_torso_rpy" value="$(arg torso_rpy)"/>
+  <xacro:property name="_left_mount_xyz" value="$(arg left_mount_xyz)"/>
+  <xacro:property name="_left_mount_rpy" value="$(arg left_mount_rpy)"/>
+  <xacro:property name="_right_mount_xyz" value="$(arg right_mount_xyz)"/>
+  <xacro:property name="_right_mount_rpy" value="$(arg right_mount_rpy)"/>
+
+  <link name="world"/>
+  <joint name="base_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+  <xacro:OpenArmBase torso_xyz="${_torso_xyz}" torso_rpy="${_torso_rpy}"/>
+
+  <!-- Single / left / right: unprefixed joints (OCS2 single.info); side selects kinematics -->
+  <xacro:if value="${_arm_config == 'single' or _arm_config == 'left'}">
+    <xacro:Arm name="" side="left" parent="torso_link"
+               mount_xyz="${_left_mount_xyz}" mount_rpy="${_left_mount_rpy}"/>
+  </xacro:if>
+
+  <xacro:if value="${_arm_config == 'right'}">
+    <xacro:Arm name="" side="right" parent="torso_link"
+               mount_xyz="${_right_mount_xyz}" mount_rpy="${_right_mount_rpy}"/>
+  </xacro:if>
+
+  <xacro:if value="${_arm_config == 'dual'}">
+    <xacro:Arm name="left" side="left" parent="torso_link"
+               mount_xyz="${_left_mount_xyz}" mount_rpy="${_left_mount_rpy}"/>
+    <xacro:Arm name="right" side="right" parent="torso_link"
+               mount_xyz="${_right_mount_xyz}" mount_rpy="${_right_mount_rpy}"/>
+  </xacro:if>
+
+</robot>

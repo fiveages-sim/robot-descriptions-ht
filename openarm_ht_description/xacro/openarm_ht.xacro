@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+
+  <xacro:include filename="$(find openarm_ht_description)/xacro/gripper.xacro"/>
+
+  <!-- One 7-DoF OpenArm. name: "" | left | right (joint prefix). side: left|right kinematics/meshes. -->
+  <xacro:macro name="Arm" params="name side:='' parent:=torso_link mount_xyz:='0 0 0' mount_rpy:='0 0 0'">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:property name="_side" value="${side if side else ('left' if (name == '' or name == 'left') else 'right')}"/>
+
+    <mujoco>
+      <compiler meshdir="../meshes" balanceinertia="true" discardvisual="false"/>
+    </mujoco>
+
+    <xacro:if value="${_side == 'left'}">
+      <link name="${prefix}link1">
+        <inertial>
+          <origin xyz="-0.00824806 0.05407816 6.022e-05"/>
+          <mass value="0.9772017"/>
+          <inertia
+              ixx="0.00114572"
+              ixy="3.314e-05"
+              ixz="-5e-07"
+              iyy="0.00086384"
+              iyz="-1.53e-06"
+              izz="0.0010431"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint1_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint1_link_simplify.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint1" type="revolute">
+        <origin xyz="${mount_xyz}" rpy="${mount_rpy}"/>
+        <parent link="${parent}"/>
+        <child link="${prefix}link1"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-3.0543" upper="1.6581" effort="75" velocity="6.0737"/>
+      </joint>
+
+      <link name="${prefix}link2">
+        <inertial>
+          <origin xyz="-0.02317012 0.0 -0.03968965"/>
+          <mass value="0.09956239"/>
+          <inertia
+              ixx="7.689e-05"
+              ixy="0.0"
+              ixz="2.394e-05"
+              iyy="9.208e-05"
+              iyz="0.0"
+              izz="4.871e-05"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint2_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint2_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint2" type="revolute">
+        <origin xyz="0 0.059 0" rpy="0 0 0"/>
+        <parent link="${prefix}link1"/>
+        <child link="${prefix}link2"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="-2.8623" upper="0.27925" effort="75" velocity="6.0737"/>
+      </joint>
+
+      <link name="${prefix}link3">
+        <inertial>
+          <origin xyz="-0.00293915 -0.00086627 -0.09125362"/>
+          <mass value="0.31334613"/>
+          <inertia
+              ixx="0.00166426"
+              ixy="4e-07"
+              ixz="-1.14e-05"
+              iyy="0.00155026"
+              iyz="-1.701e-05"
+              izz="0.00033935"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint3_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint3_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint3" type="revolute">
+        <origin xyz="0.00075 0 -0.0646" rpy="0 0 0"/>
+        <parent link="${prefix}link2"/>
+        <child link="${prefix}link3"/>
+        <axis xyz="0 0 -1"/>
+        <limit lower="-1.5708" upper="1.5708" effort="50" velocity="6.0737"/>
+      </joint>
+
+      <link name="${prefix}link4">
+        <inertial>
+          <origin xyz="-0.00122074 -0.00107776 -0.05909915"/>
+          <mass value="0.35219749"/>
+          <inertia
+              ixx="0.0004984"
+              ixy="1.9e-07"
+              ixz="6.97e-06"
+              iyy="0.00035525"
+              iyz="2.099e-05"
+              izz="0.00020903"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint4_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint4_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint4" type="revolute">
+        <origin xyz="0 -5E-05 -0.1615" rpy="0 0 0"/>
+        <parent link="${prefix}link3"/>
+        <child link="${prefix}link4"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-2.4435" upper="1.5708" effort="50" velocity="6.0737"/>
+      </joint>
+
+      <link name="${prefix}link5">
+        <inertial>
+          <origin xyz="-0.00301628 -0.00024339 -0.04784072"/>
+          <mass value="0.42918472"/>
+          <inertia
+              ixx="0.00022593"
+              ixy="2.8e-07"
+              ixz="1.107e-05"
+              iyy="0.0002748"
+              iyz="-3.5e-07"
+              izz="0.0001236"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint5_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint5_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint5" type="revolute">
+        <origin xyz="0 0 -0.094" rpy="0 0 0"/>
+        <parent link="${prefix}link4"/>
+        <child link="${prefix}link5"/>
+        <axis xyz="0 0 -1"/>
+        <limit lower="-1.5708" upper="1.5708" effort="10" velocity="10.263"/>
+      </joint>
+
+      <link name="${prefix}link6">
+        <inertial>
+          <origin xyz="-0.00042158 0.00237788 -0.00011028"/>
+          <mass value="0.26605252"/>
+          <inertia
+              ixx="0.00010511"
+              ixy="-2e-07"
+              ixz="4.4e-07"
+              iyy="0.00010704"
+              iyz="-1.4e-07"
+              izz="0.0001287"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint6_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint6_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint6" type="revolute">
+        <origin xyz="0 0 -0.1255" rpy="0 0 0"/>
+        <parent link="${prefix}link5"/>
+        <child link="${prefix}link6"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="-0.76794" upper="0.76794" effort="20" velocity="6.2832"/>
+      </joint>
+
+      <link name="${prefix}link7">
+        <inertial>
+          <origin xyz="-8.567e-05 0.00077068 -0.06260654"/>
+          <mass value="0.23310292"/>
+          <inertia
+              ixx="0.00019703"
+              ixy="4.3e-07"
+              ixz="-1.6e-07"
+              iyy="0.00017465"
+              iyz="-1.298e-05"
+              izz="0.0001016"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint7_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint7_link_simplify.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint7" type="revolute">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="${prefix}link6"/>
+        <child link="${prefix}link7"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="10" velocity="10.263"/>
+      </joint>
+
+      <xacro:Gripper name="${name}" side="${_side}"/>
+    </xacro:if>
+
+
+    <xacro:if value="${_side == 'right'}">
+      <link name="${prefix}link1">
+        <inertial>
+          <origin xyz="-0.00824806 -0.05412006 3.006e-05"/>
+          <mass value="0.9772017"/>
+          <inertia
+              ixx="0.00114613"
+              ixy="-3.447e-05"
+              ixz="4.4e-07"
+              iyy="0.00086384"
+              iyz="-1.1e-06"
+              izz="0.0010435"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint1_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint1_link_simplify.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint1" type="revolute">
+        <origin xyz="${mount_xyz}" rpy="${mount_rpy}"/>
+        <parent link="${parent}"/>
+        <child link="${prefix}link1"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-1.6581" upper="3.0543" effort="75" velocity="6.0737"/>
+      </joint>
+
+      <link name="${prefix}link2">
+        <inertial>
+          <origin xyz="-0.02317012 0.0 -0.03968965"/>
+          <mass value="0.09956239"/>
+          <inertia
+              ixx="7.689e-05"
+              ixy="0.0"
+              ixz="2.394e-05"
+              iyy="9.208e-05"
+              iyz="0.0"
+              izz="4.871e-05"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint2_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint2_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint2" type="revolute">
+        <origin xyz="0 -0.059 0" rpy="0 0 0"/>
+        <parent link="${prefix}link1"/>
+        <child link="${prefix}link2"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="-2.8623" upper="0.27925" effort="75" velocity="6.0737"/>
+      </joint>
+
+      <link name="${prefix}link3">
+        <inertial>
+          <origin xyz="-0.00270323 0.00075972 -0.09125362"/>
+          <mass value="0.31334613"/>
+          <inertia
+              ixx="0.00166431"
+              ixy="-1.04e-06"
+              ixz="-6.83e-06"
+              iyy="0.00155067"
+              iyz="1.881e-05"
+              izz="0.00033982"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint3_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint3_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint3" type="revolute">
+        <origin xyz="-0.00468 -0.0044713 -0.06468" rpy="0 0 0"/>
+        <parent link="${prefix}link2"/>
+        <child link="${prefix}link3"/>
+        <axis xyz="0 0 -1"/>
+        <limit lower="-1.5708" upper="1.5708" effort="50" velocity="6.0737"/>
+      </joint>
+
+      <link name="${prefix}link4">
+        <inertial>
+          <origin xyz="-0.00123805 0.00095534 -0.05909395"/>
+          <mass value="0.35219749"/>
+          <inertia
+              ixx="0.00049866"
+              ixy="-7.5e-07"
+              ixz="7.25e-06"
+              iyy="0.00035545"
+              iyz="-2.156e-05"
+              izz="0.00020916"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint4_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint4_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint4" type="revolute">
+        <origin xyz="0.00543 0.0045213 -0.16142" rpy="0 0 0"/>
+        <parent link="${prefix}link3"/>
+        <child link="${prefix}link4"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-1.5708" upper="2.4435" effort="50" velocity="6.0737"/>
+      </joint>
+
+      <link name="${prefix}link5">
+        <inertial>
+          <origin xyz="-0.00301628 -0.00024339 -0.04784072"/>
+          <mass value="0.42918472"/>
+          <inertia
+              ixx="0.00022593"
+              ixy="2.8e-07"
+              ixz="1.107e-05"
+              iyy="0.0002748"
+              iyz="-3.5e-07"
+              izz="0.0001236"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint5_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint5_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint5" type="revolute">
+        <origin xyz="-0.00543 -0.0044713 -0.09408" rpy="0 0 0"/>
+        <parent link="${prefix}link4"/>
+        <child link="${prefix}link5"/>
+        <axis xyz="0 0 -1"/>
+        <limit lower="-1.5708" upper="1.5708" effort="10" velocity="10.263"/>
+      </joint>
+
+      <link name="${prefix}link6">
+        <inertial>
+          <origin xyz="-0.00042158 -0.00237788 0.00010463"/>
+          <mass value="0.26605252"/>
+          <inertia
+              ixx="0.00010511"
+              ixy="2e-07"
+              ixz="-4.9e-07"
+              iyy="0.00010704"
+              iyz="-1.3e-07"
+              izz="0.0001287"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint6_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint6_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint6" type="revolute">
+        <origin xyz="0.00543 0.0044713 -0.12542" rpy="0 0 0"/>
+        <parent link="${prefix}link5"/>
+        <child link="${prefix}link6"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="-0.76794" upper="0.76794" effort="20" velocity="6.2832"/>
+      </joint>
+
+      <link name="${prefix}link7">
+        <inertial>
+          <origin xyz="-8.715e-05 -0.00101597 -0.06260656"/>
+          <mass value="0.23310292"/>
+          <inertia
+              ixx="0.00019693"
+              ixy="4.7e-07"
+              ixz="-1.4e-07"
+              iyy="0.00017465"
+              iyz="1.289e-05"
+              izz="0.0001015"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint7_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint7_link_simplify.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}joint7" type="revolute">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="${prefix}link6"/>
+        <child link="${prefix}link7"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="-1.5708" upper="1.5708" effort="10" velocity="10.263"/>
+      </joint>
+
+      <xacro:Gripper name="${name}" side="${_side}"/>
+    </xacro:if>
+
+  </xacro:macro>
+</robot>

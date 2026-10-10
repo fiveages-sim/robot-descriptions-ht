@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Parallel gripper: base + two fingers. Primary joint is gripper_joint; gripper_joint2 mimics. -->
+  <xacro:macro name="Gripper" params="name side:=''">
+    <xacro:property name="prefix" value="${name + '_' if name else ''}"/>
+    <xacro:property name="_side" value="${side if side else ('left' if (name == '' or name == 'left') else 'right')}"/>
+
+    <xacro:if value="${_side == 'left'}">
+      <link name="${prefix}gripper_link">
+        <inertial>
+          <origin xyz="6.03e-06 1.102e-05 -0.01065717"/>
+          <mass value="0.10000"/>
+          <inertia
+              ixx="0.00016864"
+              ixy="-2.14e-06"
+              ixz="0.0"
+              iyy="1.602e-05"
+              iyz="0.0"
+              izz="0.00017264"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_gripper_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_gripper_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}gripper_base_joint" type="fixed">
+        <origin xyz="0 0 -0.09015" rpy="0 0 0"/>
+        <parent link="${prefix}link7"/>
+        <child link="${prefix}gripper_link"/>
+      </joint>
+
+      <link name="${prefix}finger1">
+        <inertial>
+          <origin xyz="7.42e-05 -0.01775832 -0.027404"/>
+          <mass value="0.09000"/>
+          <inertia
+              ixx="5.702e-05"
+              ixy="8e-08"
+              ixz="-1.3e-07"
+              iyy="5.837e-05"
+              iyz="3.24e-06"
+              izz="1.536e-05"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_r_finger_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_r_finger_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}gripper_joint" type="prismatic">
+        <origin xyz="0 0 -0.0185" rpy="0 0 0"/>
+        <parent link="${prefix}gripper_link"/>
+        <child link="${prefix}finger1"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="0" upper="0.0475" effort="10" velocity="10.263"/>
+      </joint>
+
+      <link name="${prefix}finger2">
+        <inertial>
+          <origin xyz="-7.42e-05 0.01775832 -0.027404"/>
+          <mass value="0.090000"/>
+          <inertia
+              ixx="5.702e-05"
+              ixy="8e-08"
+              ixz="1.4e-07"
+              iyy="5.837e-05"
+              iyz="-3.24e-06"
+              izz="1.536e-05"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_l_finger_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_l_finger_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}gripper_joint2" type="prismatic">
+        <origin xyz="0 0 -0.0185" rpy="0 0 0"/>
+        <parent link="${prefix}gripper_link"/>
+        <child link="${prefix}finger2"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="0" upper="0.0475" effort="10" velocity="10.263"/>
+        <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+      </joint>
+
+      <link name="${prefix}gripper_center"/>
+
+      <joint name="${prefix}gripper_center_joint" type="fixed">
+        <origin xyz="0 0 -0.1" rpy="0 0 0"/>
+        <parent link="${prefix}gripper_link"/>
+        <child link="${prefix}gripper_center"/>
+      </joint>
+    </xacro:if>
+
+    <xacro:if value="${_side == 'right'}">
+      <link name="${prefix}gripper_link">
+        <inertial>
+          <origin xyz="0.00543605 0.00448234 -0.01057694"/>
+          <mass value="0.10"/>
+          <inertia
+              ixx="0.00016864"
+              ixy="-2.14e-06"
+              ixz="0.0"
+              iyy="1.602e-05"
+              iyz="0.0"
+              izz="0.00017264"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_gripper_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_gripper_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}gripper_base_joint" type="fixed">
+        <origin xyz="-0.00543 -0.0044713 -0.09023" rpy="0 0 0"/>
+        <parent link="${prefix}link7"/>
+        <child link="${prefix}gripper_link"/>
+      </joint>
+
+      <link name="${prefix}finger1">
+        <inertial>
+          <origin xyz="7.42e-05 -0.01775832 -0.027404"/>
+          <mass value="0.090"/>
+          <inertia
+              ixx="5.702e-05"
+              ixy="8e-08"
+              ixz="-1.3e-07"
+              iyy="5.837e-05"
+              iyz="3.24e-06"
+              izz="1.536e-05"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_r_finger_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_r_finger_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}gripper_joint" type="prismatic">
+        <origin xyz="0.00543 0.0044713 -0.01842" rpy="0 0 0"/>
+        <parent link="${prefix}gripper_link"/>
+        <child link="${prefix}finger1"/>
+        <axis xyz="0 -1 0"/>
+        <limit lower="0" upper="0.0475" effort="10" velocity="10.263"/>
+      </joint>
+
+      <link name="${prefix}finger2">
+        <inertial>
+          <origin xyz="-7.42e-05 0.01775832 -0.027404"/>
+          <mass value="0.090"/>
+          <inertia
+              ixx="5.702e-05"
+              ixy="8e-08"
+              ixz="1.4e-07"
+              iyy="5.837e-05"
+              iyz="-3.24e-06"
+              izz="1.536e-05"/>
+        </inertial>
+        <visual>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_l_finger_link.STL"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_l_finger_link.STL"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <joint name="${prefix}gripper_joint2" type="prismatic">
+        <origin xyz="0.00543 0.0044713 -0.01842" rpy="0 0 0"/>
+        <parent link="${prefix}gripper_link"/>
+        <child link="${prefix}finger2"/>
+        <axis xyz="0 1 0"/>
+        <limit lower="0.0" upper="0.0475" effort="10" velocity="10.263"/>
+        <mimic joint="${prefix}gripper_joint" multiplier="1" offset="0"/>
+      </joint>
+
+      <link name="${prefix}gripper_center"/>
+
+      <joint name="${prefix}gripper_center_joint" type="fixed">
+        <origin xyz="0 0 -0.1" rpy="0 0 0"/>
+        <parent link="${prefix}gripper_link"/>
+        <child link="${prefix}gripper_center"/>
+      </joint>
+    </xacro:if>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,254 @@
+; robot model meta-information
+model_information {
+  manipulatorModelType     0
+
+  removeJoints {
+    [0] "left_gripper_joint"
+    [1] "left_gripper_joint2"
+    [2] "right_gripper_joint"
+    [3] "right_gripper_joint2"
+  }
+
+  baseFrame                       "base_link"
+  eeFrame                         "left_gripper_center"
+  eeFrame1                        "right_gripper_center"
+}
+
+model_settings
+{
+  usePreComputation               true
+  recompileLibraries              true
+}
+
+ddp
+{
+  algorithm                       SLQ
+
+  nThreads                        3
+  threadPriority                  50
+
+  maxNumIterations                1
+  minRelCost                      0.1
+  constraintTolerance             1e-3
+
+  displayInfo                     false
+  displayShortSummary             false
+  checkNumericalStability         false
+  debugPrintRollout               false
+  debugCaching                    false
+
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  maxNumStepsPerSecond            100000
+  timeStep                        1e-3
+  backwardPassIntegratorType      ODE45
+
+  constraintPenaltyInitialValue   20.0
+  constraintPenaltyIncreaseRate   2.0
+
+  preComputeRiccatiTerms          true
+  useFeedbackPolicy               false
+
+  strategy                        LINE_SEARCH
+  lineSearch
+  {
+    minStepLength                 1e-2
+    maxStepLength                 1.0
+    hessianCorrectionStrategy     DIAGONAL_SHIFT
+    hessianCorrectionMultiple     1e-3
+  }
+}
+
+rollout
+{
+  AbsTolODE                       1e-5
+  RelTolODE                       1e-3
+  timeStep                        1e-2
+  integratorType                  ODE45
+  maxNumStepsPerSecond            100000
+  checkNumericalStability         false
+}
+
+mpc
+{
+  timeHorizon                     1.0
+  solutionTimeWindow              0.2
+  coldStart                       false
+  debugPrint                      false
+  mpcDesiredFrequency             100
+  mrtDesiredFrequency             500
+}
+
+initialState
+{
+  base
+  {
+    defaultManipulator
+    {
+    }
+  }
+
+  arm
+  {
+    (0,0)   0.0
+    (1,0)  -0.5
+    (2,0)   0.0
+    (3,0)  -1.0
+    (4,0)   0.0
+    (5,0)   0.0
+    (6,0)   0.0
+    (7,0)   0.0
+    (8,0)  -0.5
+    (9,0)   0.0
+    (10,0)  1.0
+    (11,0)  0.0
+    (12,0)  0.0
+    (13,0)  0.0
+  }
+}
+
+inputCost
+{
+  R
+  {
+    base
+    {
+      defaultManipulator
+      {
+      }
+    }
+
+    arm
+    {
+      scaling 1e-3
+      (0,0)    1.2
+      (1,1)    1.5
+      (2,2)    1.2
+      (3,3)    1.2
+      (4,4)    1.0
+      (5,5)    1.0
+      (6,6)    1.0
+      (7,7)    1.2
+      (8,8)    1.5
+      (9,9)    1.2
+      (10,10)  1.2
+      (11,11)  1.0
+      (12,12)  1.0
+      (13,13)  1.0
+    }
+  }
+}
+
+endEffector
+{
+  dualArmMode      true
+  leftArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+  rightArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+}
+
+finalEndEffector
+{
+  dualArmMode      true
+  leftArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+  rightArm
+  {
+    muPosition      10.0
+    muOrientation    5.0
+  }
+}
+
+selfCollision
+{
+  activate  false
+  collisionObjectPairs
+  {
+  }
+  collisionLinkPairs
+  {
+  }
+  minimumDistance  0.01
+  activationDistance 0.1
+  mu      1e-2
+  delta   1e-3
+}
+
+jointPositionLimits
+{
+  activate  true
+  mu      1e-3
+  delta   1e-3
+}
+
+jointVelocityLimits
+{
+  mu      0.01
+  delta   1e-2
+
+  lowerBound
+  {
+    base
+    {
+      defaultManipulator
+      {
+      }
+    }
+
+    arm
+    {
+      (0,0)  -6.0737
+      (1,0)  -6.0737
+      (2,0)  -6.0737
+      (3,0)  -6.0737
+      (4,0)  -10.263
+      (5,0)  -6.2832
+      (6,0)  -10.263
+      (7,0)  -6.0737
+      (8,0)  -6.0737
+      (9,0)  -6.0737
+      (10,0) -6.0737
+      (11,0) -10.263
+      (12,0) -6.2832
+      (13,0) -10.263
+    }
+  }
+
+  upperBound
+  {
+    base
+    {
+      defaultManipulator
+      {
+      }
+    }
+
+    arm
+    {
+      (0,0)  6.0737
+      (1,0)  6.0737
+      (2,0)  6.0737
+      (3,0)  6.0737
+      (4,0)  10.263
+      (5,0)  6.2832
+      (6,0)  10.263
+      (7,0)  6.0737
+      (8,0)  6.0737
+      (9,0)  6.0737
+      (10,0) 6.0737
+      (11,0) 10.263
+      (12,0) 6.2832
+      (13,0) 10.263
+    }
+  }
+}

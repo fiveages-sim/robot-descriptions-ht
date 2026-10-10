@@ -1,0 +1,8 @@
+/**:
+  ros__parameters:
+
+    enable_vr: true
+
+    marker_fixed_frame: base_link
+
+    vr_follow_frame: base_link

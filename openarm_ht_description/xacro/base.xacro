@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Dual-arm pedestal: base_link + torso_link (mechanically one base, split for configuration). -->
+  <xacro:macro name="OpenArmBase" params="torso_xyz:='0 0 0.7' torso_rpy:='0 0 0'">
+
+    <link name="base_link">
+      <inertial>
+        <origin xyz="0.0 0.0 0.05542218"/>
+        <mass value="10.57317707"/>
+        <inertia
+            ixx="0.35705741"
+            ixy="0.0"
+            ixz="0.0"
+            iyy="0.35705741"
+            iyz="0.0"
+            izz="0.13447021"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find openarm_ht_description)/meshes/base_link.STL"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find openarm_ht_description)/meshes/base_link_simplify.STL"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="torso_link">
+      <inertial>
+        <origin xyz="7.642e-05 0.0 0.00012173"/>
+        <mass value="1.94711343"/>
+        <inertia
+            ixx="0.01104026"
+            ixy="4.23e-06"
+            ixz="-3.57e-06"
+            iyy="0.0021223"
+            iyz="0.0"
+            izz="0.01091172"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find openarm_ht_description)/meshes/torso_link.STL"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find openarm_ht_description)/meshes/torso_link_simplify.STL"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="torso_joint" type="fixed">
+      <origin xyz="${torso_xyz}" rpy="${torso_rpy}"/>
+      <parent link="base_link"/>
+      <child link="torso_link"/>
+    </joint>
+
+  </xacro:macro>
+</robot>
