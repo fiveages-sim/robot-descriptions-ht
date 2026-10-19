@@ -20,7 +20,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/l_gripper_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_gripper_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -50,7 +50,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/l_r_finger_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_r_finger_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -82,7 +82,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/l_l_finger_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_l_finger_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -125,7 +125,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/r_gripper_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_gripper_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -155,7 +155,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/r_r_finger_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_r_finger_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -187,7 +187,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/r_l_finger_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_l_finger_link.glb"/>
           </geometry>
         </visual>
         <collision>

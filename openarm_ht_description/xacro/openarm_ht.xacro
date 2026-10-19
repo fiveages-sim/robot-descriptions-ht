@@ -28,7 +28,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint1_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint1_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -60,7 +60,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint2_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint2_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -92,7 +92,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint3_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint3_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -124,7 +124,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint4_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint4_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -156,7 +156,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint5_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint5_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -188,7 +188,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint6_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint6_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -220,7 +220,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint7_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/l_joint7_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -257,7 +257,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint1_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint1_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -289,7 +289,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint2_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint2_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -321,7 +321,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint3_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint3_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -332,7 +332,7 @@
       </link>
 
       <joint name="${prefix}joint3" type="revolute">
-        <origin xyz="-0.00468 -0.0044713 -0.06468" rpy="0 0 0"/>
+        <origin xyz="0.00075 0 -0.0646" rpy="0 0 0"/>
         <parent link="${prefix}link2"/>
         <child link="${prefix}link3"/>
         <axis xyz="0 0 -1"/>
@@ -353,7 +353,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint4_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint4_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -364,7 +364,7 @@
       </link>
 
       <joint name="${prefix}joint4" type="revolute">
-        <origin xyz="0.00543 0.0045213 -0.16142" rpy="0 0 0"/>
+        <origin xyz="0 5E-05 -0.1615" rpy="0 0 0"/>
         <parent link="${prefix}link3"/>
         <child link="${prefix}link4"/>
         <axis xyz="0 -1 0"/>
@@ -385,7 +385,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint5_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint5_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -417,7 +417,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint6_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint6_link.glb"/>
           </geometry>
         </visual>
         <collision>
@@ -449,7 +449,7 @@
         </inertial>
         <visual>
           <geometry>
-            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint7_link.STL"/>
+            <mesh filename="file://$(find openarm_ht_description)/meshes/r_joint7_link.glb"/>
           </geometry>
         </visual>
         <collision>

@@ -17,7 +17,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find openarm_ht_description)/meshes/base_link.STL"/>
+          <mesh filename="file://$(find openarm_ht_description)/meshes/base_link.glb"/>
         </geometry>
       </visual>
       <collision>
@@ -41,7 +41,7 @@
       </inertial>
       <visual>
         <geometry>
-          <mesh filename="file://$(find openarm_ht_description)/meshes/torso_link.STL"/>
+          <mesh filename="file://$(find openarm_ht_description)/meshes/torso_link.glb"/>
         </geometry>
       </visual>
       <collision>

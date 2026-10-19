@@ -56,6 +56,6 @@ ocs2_arm_controller:
       - velocity
       - effort
 
-    # 14-DoF home/rest for dual arm
-    home_1: [0.0, -0.5, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, -0.5, 0.0, 1.0, 0.0, 0.0, 0.0]
+    # 14-DoF home/rest for dual arm. Zero hangs both arms straight down.
+    home_1: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
     rest_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
