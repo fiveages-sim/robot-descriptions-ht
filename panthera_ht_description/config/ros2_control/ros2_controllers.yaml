@@ -63,6 +63,6 @@ ocs2_arm_controller:
     robot_name: panthera_ht
     mpc_frequency: 100
 
-    # Multi-home: FSM cmd 100 cycles home_1 <-> rest (must be 6-DoF for single arm)
+    # Multi-home: FSM cmd 100 cycles home_1 <-> home_2 (must be 6-DoF for single arm)
     home_1: [0.0, 0.7, 0.7, -0.1, 0.0, 0.0]
-    rest_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]

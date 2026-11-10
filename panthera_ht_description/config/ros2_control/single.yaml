@@ -66,4 +66,4 @@ ocs2_arm_controller:
 
     # 6-DoF home/rest for single arm
     home_1: [0.0, 0.8, 0.8, 0.0, 0.0, 0.0]
-    rest_pos: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    home_2: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
